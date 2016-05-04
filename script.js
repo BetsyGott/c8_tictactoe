@@ -16,7 +16,7 @@ var canClick = true,
     image: "assets/images/piece_mushroom.png"
 },
    pepperPiece = {
-    name: "greenPepper",
+    name: "greenpepper",
     image: "assets/images/piece_green_pepper.png"
 },
     pepperoniPiece = {
@@ -138,6 +138,34 @@ function setCursor(currentPlayer){
     }
 }
 
+function playerInputInit(){
+    //canClick is false
+    canClick = false;
+    //show form
+    if($("#form-board").is(":hidden")){
+        $("#form-board").show();
+    }
+    //show player1 input
+    $(".form-container1").show();
+    //hide player 2 input
+    $(".form-container2").hide();
+}
+
+function player2FormInit(){
+    //hide player1 input
+    $(".form-container1").hide();
+    //show player 2 input
+    $(".form-container2").show();
+
+    //hide player 1's piece choice from options for player 2
+    $(".form-container2 input:radio").each(function(){
+        if( $(this).val() === player1.piece.name ){
+            $(this).hide();
+        }
+    });
+
+}
+
 $(document).ready(function(){
 
 
@@ -160,8 +188,7 @@ $(document).ready(function(){
     checkWin(player1);
     checkWin(player2);
 
-    //set cursor initially, with player 1 for now
-    console.log("initial cursor name " , gameState.currentPlayer.piece.name);
+    //set cursor initially, with player 1
     setCursor(player1);
 
     //run function to assign piece objects to player objects (run again on new game button click

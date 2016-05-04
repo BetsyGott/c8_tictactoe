@@ -18,8 +18,9 @@ body {
 #form-board {
     position: absolute;
     float: left;
-    width: 12vw;
-    height: 66vh;
+    width: 15vw;
+    height: 90vh;
+    left: 2%;
     padding-left: 9%;
     background-image: url('assets/images/form_background.jpg');
     background-repeat: no-repeat;
@@ -29,15 +30,24 @@ body {
 
 .form-container1, .form-container2 {
     position: absolute;
-    left: 22%;
+    left: 18%;
     top: 32%;
+    text-align: center;
     width: 60%;
     color: #ffffff;
     font-size: 120%;
 }
 
+.form-input {font-size: 110%;width: 13vw;}
+
+.form-area {
+    /* padding-bottom: 0%; */
+}
+
 .radio_img {
-    width: 30%;
+    width: 26%;
+    vertical-align: middle;
+    padding: 3% 0;
 }
 
 #player-board {
