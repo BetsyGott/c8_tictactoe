@@ -138,7 +138,52 @@ function setCursor(currentPlayer){
     }
 }
 
+function playerInputInit(){
+    //canClick is false
+    canClick = false;
+    //show form
+    if($("#form-board").is(":hidden")){
+        $("#form-board").show();
+    }
+    //show player1 input
+    $(".form-container1").show();
+    //hide player 2 input
+    $(".form-container2").hide();
+}
+
+function player2FormInit(){
+
+    //hide player1 input
+    $(".form-container1").hide();
+    //show player 2 input
+    $(".form-container2").show();
+}
+
 $(document).ready(function(){
+
+    //if there is no local storage state saved, run initialize func
+    if(localStorage.getItem("gameState")===null){
+        playerInputInit();
+    }
+
+    $(".form-container1 > form").submit(function(){
+        //save val of player 1 submission into player1 name and piece
+        
+        //run player2 form init function
+        player2FormInit();
+    });
+
+    $(".form-container2 > form").submit(function(){
+        //save val of player 2 submission into player1 name and piece
+
+        //hide entire menu
+        if($("#form-board").is(":visible")){
+            $("#form-board").hide();
+        }
+        
+        //set canClick to true
+        canClick = true;
+    });
 
     //populates the board with localStorage saved values if there are any
     $(".game-cell").each(function(){
@@ -157,8 +202,7 @@ $(document).ready(function(){
     checkWin(player1);
     checkWin(player2);
 
-    //set cursor initially, with player 1 for now
-    console.log("initial cursor name " , gameState.currentPlayer.piece.name);
+    //set cursor initially, with player 1
     setCursor(player1);
 
     //run function to assign piece objects to player objects (run again on new game button click
