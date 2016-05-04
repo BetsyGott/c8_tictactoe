@@ -140,6 +140,9 @@ function setCursor(currentPlayer){
 
 $(document).ready(function(){
 
+
+    $("#form-board").hide();
+    
     //populates the board with localStorage saved values if there are any
     $(".game-cell").each(function(){
         //get ID of cell div
@@ -163,6 +166,7 @@ $(document).ready(function(){
 
     //run function to assign piece objects to player objects (run again on new game button click
     $(".game-cell").on("click",function() {
+
         if (canClick === true) {
 
         var $this = $(this);
