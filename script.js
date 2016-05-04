@@ -161,6 +161,7 @@ function player2FormInit(){
     $(".form-container2 input:radio").each(function(){
         if( $(this).val() === player1.piece.name ){
             $(this).hide();
+            $(this).parent().hide();
         }
     });
 
@@ -173,18 +174,38 @@ $(document).ready(function(){
         playerInputInit();
     }
 
-    $(".form-container1 > form").submit(function(){
+    $("#form1Button").on("click", function(){
+        //event.preventDefault();
+        console.log("name entered fghj: ", $(this).siblings("input[type='text']").val());
         //save val of player 1 submission into player1 name and piece
-        player1.name = $(this).find("input:text").val();
-        var pieceName = $(this).find("input[name=topping]:checked").val();
-
+        player1.name = $(this).siblings("input:text").val();
+        console.log("player 1 name " + player1.name);
+        var pieceName = $(this).siblings("input[name='topping']:checked").val();
+        console.log("player 1 piece " , player1.piece);
+        if( pieceName === pepperoniPiece.name ){
+            player1.piece = pepperoniPiece;
+        }else if( pieceName === mushroomPiece.name ){
+            player1.piece = mushroomPiece;
+        } else{
+            player1.piece = pepperPiece;
+        }
         //run player2 form init function
         player2FormInit();
     });
 
-    $(".form-container2 > form").submit(function(){
+    $("#form2Button").on("click", function(){
+        event.preventDefault();
         //save val of player 2 submission into player1 name and piece
-        player1.name = $(this).find("input:text").val();
+        player2.name = $(this).find("input:text").val();
+        var pieceName = $(this).find("input[name=topping]:checked").val();
+
+        if( pieceName === pepperoniPiece.name ){
+            player2.piece = pepperoniPiece;
+        }else if( pieceName === mushroomPiece.name ){
+            player2.piece = mushroomPiece;
+        } else{
+            player2.piece = pepperPiece;
+        }
         //hide entire menu
         if($("#form-board").is(":visible")){
             $("#form-board").hide();
