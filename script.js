@@ -16,7 +16,7 @@ var canClick = true,
     image: "assets/images/piece_mushroom.png"
 },
    pepperPiece = {
-    name: "greenPepper",
+    name: "greenpepper",
     image: "assets/images/piece_green_pepper.png"
 },
     pepperoniPiece = {
@@ -152,11 +152,18 @@ function playerInputInit(){
 }
 
 function player2FormInit(){
-
     //hide player1 input
     $(".form-container1").hide();
     //show player 2 input
     $(".form-container2").show();
+
+    //hide player 1's piece choice from options for player 2
+    $(".form-container2 input:radio").each(function(){
+        if( $(this).val() === player1.piece.name ){
+            $(this).hide();
+        }
+    });
+
 }
 
 $(document).ready(function(){
@@ -168,14 +175,16 @@ $(document).ready(function(){
 
     $(".form-container1 > form").submit(function(){
         //save val of player 1 submission into player1 name and piece
-        
+        player1.name = $(this).find("input:text").val();
+        var pieceName = $(this).find("input[name=topping]:checked").val();
+
         //run player2 form init function
         player2FormInit();
     });
 
     $(".form-container2 > form").submit(function(){
         //save val of player 2 submission into player1 name and piece
-
+        player1.name = $(this).find("input:text").val();
         //hide entire menu
         if($("#form-board").is(":visible")){
             $("#form-board").hide();
