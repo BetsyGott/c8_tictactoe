@@ -14,6 +14,15 @@ var TicTacToe = function(){
 
     this.gameState = localStorage.getItem("gameState");
 
+    if(!this.gameState){
+        this.gameState = {
+            boardState: [null, null, null, null, null, null, null, null, null],
+            currentPlayer: player1
+        };
+    } else{
+        this.gameState = JSON.parse(this.gameState);
+    }
+
 };
 
 var GamePiece = function(){
@@ -61,32 +70,32 @@ var player2 = new Player();
 
     //var gameState = localStorage.getItem("gameState");
 
-    if(!gameState){
-        gameState = {
-        boardState: [null, null, null, null, null, null, null, null, null],
-        currentPlayer: player1
-        };
-    } else{
-        gameState = JSON.parse(gameState);
-    }
+    // if(!gameState){
+    //     gameState = {
+    //     boardState: [null, null, null, null, null, null, null, null, null],
+    //     currentPlayer: player1
+    //     };
+    // } else{
+    //     gameState = JSON.parse(gameState);
+    // }
 
-function checkWin(playerPiece){
+TicTacToe.prototype.checkWin = function(playerPiece){
     var playerArray = [];
-    for(i=0; i < gameState.boardState.length; i++){
+    for(var i=0; i < this.gameState.boardState.length; i++){
         //loop through gameState array for existing img srcs
-        if(gameState.boardState[i] === playerPiece.piece.image){
+        if(this.gameState.boardState[i] === playerPiece.piece.image){
             // if there is a src match push that index to playerArray
             playerArray.push(i);
             // console.log(playerArray);
         }
     }
-    for (i = 0; i < winArray.length; i++) {
+    for (i = 0; i < this.winArray.length; i++) {
         //enter into each item in winArray
-        isWinner = true;
+        var isWinner = true;
         //isWinner will be set to false whenever a subArray does not meet win condition
-        for (j = 0; j < winArray[i].length; j++) {
+        for (j = 0; j < this.winArray[i].length; j++) {
             //check each item in subArrays of winArray
-            if(playerArray.indexOf(winArray[i][j])===-1){
+            if(playerArray.indexOf(this.winArray[i][j])===-1){
                 //if subArray[j] is not in playerArray, not a winner
                 isWinner = false;
                 // console.log("isWinner inside 2nd for loop: " + isWinner);
@@ -96,15 +105,15 @@ function checkWin(playerPiece){
         }
         //check if isWinner is true, if so, there was a win condition, current player wins
         if(isWinner === true){
-            canClick = false;
+            this.canClick = false;
             var $h3WinMessage = $("<h3>"+ playerPiece.name + " wins!" + "</h3>");
             $("#player-board").append($h3WinMessage);
             $("#game-reset").show();
         }
     }
-    if(playCount === 9 && isWinner === false){
+    if(this.playCount === 9 && isWinner === false){
         //if all cells have been filled and there's no winner, it's a tie
-        canClick = false;
+        this.canClick = false;
         var $h3TieMessage = $("<h3>" + "game is a tie." + "</h3>");
         $("#player-board").append($h3TieMessage);
         $("#game-reset").show();
@@ -112,15 +121,15 @@ function checkWin(playerPiece){
 
 }
 
-function resetGame(){
+TicTacToe.prototype.resetGame = function() {
 
     //reset playCount
-    playCount = 0;
+    this.playCount = 0;
     //remove localStorage item
     localStorage.removeItem("gameState");
     
     //reset boardState
-    gameState.boardState = [null, null, null, null, null, null, null, null, null];
+    this.gameState.boardState = [null, null, null, null, null, null, null, null, null];
     
     //reset board
     $(".game-cell").each(function(){
@@ -136,14 +145,14 @@ function resetGame(){
     $("#game-board").removeClass("greenpepper_cursor");
 
     //set cursor and player1 to currentPlayer in temp holder var
-    setCursor(gameState.currentPlayer);
+    this.setCursor(this.gameState.currentPlayer);
 
     //hide reset button
     $("#game-reset").hide();
 
 }
 
-function setCursor(currentPlayer){
+TicTacToe.prototype.setCursor = function(currentPlayer){
     if(currentPlayer.piece.name === "pepperoni"){
         console.log(currentPlayer.piece.name);
         // remove mushroom and greenpepper, add pepperoni
@@ -165,9 +174,9 @@ function setCursor(currentPlayer){
     }
 }
 
-function playerInputInit(){
+TicTacToe.prototype.playerInputInit = function(){
     //canClick is false
-    canClick = false;
+    this.canClick = false;
     //show form
     if($("#form-board").is(":hidden")){
         $("#form-board").show();
@@ -178,7 +187,7 @@ function playerInputInit(){
     $(".form-container2").hide();
 }
 
-function player2FormInit(){
+TicTacToe.prototype.player2FormInit = function(){
     //hide player1 input
     $(".form-container1").hide();
     //show player 2 input
@@ -195,7 +204,8 @@ function player2FormInit(){
 
 $(document).ready(function(){
 
-
+    var newGame = new TicTacToe();
+    
     $("#form-board").hide();
     
     //populates the board with localStorage saved values if there are any
@@ -204,24 +214,24 @@ $(document).ready(function(){
         var $id = $(this).attr("id");
         var index = $id[$id.length-1];
 
-        if(gameState.boardState[index]){
-            var $img = $("<img>").attr("src", gameState.boardState[index]);
+        if(newGame.gameState.boardState[index]){
+            var $img = $("<img>").attr("src", newGame.gameState.boardState[index]);
             $(this).html($img);
         }
     });
 
     //hide reset game button by default
     $("#game-reset").hide();
-    checkWin(player1);
-    checkWin(player2);
+    newGame.checkWin(player1);
+    newGame.checkWin(player2);
 
     //set cursor initially, with player 1
-    setCursor(player1);
+    newGame.setCursor(player1);
 
     //run function to assign piece objects to player objects (run again on new game button click
     $(".game-cell").on("click",function() {
 
-        if (canClick === true) {
+        if (newGame.canClick === true) {
 
         var $this = $(this);
 
@@ -229,30 +239,30 @@ $(document).ready(function(){
 
         var index = $id[$id.length-1];
 
-        if(!gameState.boardState[index]) {
-            console.log(gameState.currentPlayer.piece.image);
+        if(!newGame.gameState.boardState[index]) {
+            console.log(newGame.gameState.currentPlayer.piece.image);
             //if the html is empty
             // create an image element with a src equal to current player's piece image
 
-            gameState.boardState[index] = gameState.currentPlayer.piece.image;
+            newGame.gameState.boardState[index] = newGame.gameState.currentPlayer.piece.image;
 
-            var $img = $("<img>").attr("src", gameState.boardState[index]);
+            var $img = $("<img>").attr("src", newGame.gameState.boardState[index]);
 
             //insert it into the cell clicked on
             $this.html($img);
             //update play count
-            playCount++;
+            newGame.playCount++;
             // check for win
-            checkWin(gameState.currentPlayer);
+            newGame.checkWin(newGame.gameState.currentPlayer);
             // switch player to other player
-            if(gameState.currentPlayer.name === player1.name){
-                gameState.currentPlayer = player2;
-                setCursor(gameState.currentPlayer);
+            if(newGame.gameState.currentPlayer.name === player1.name){
+                newGame.gameState.currentPlayer = player2;
+                newGame.setCursor(newGame.gameState.currentPlayer);
             }else {
-                gameState.currentPlayer = player1;
-                setCursor(gameState.currentPlayer);
+                newGame.gameState.currentPlayer = player1;
+                newGame.setCursor(newGame.gameState.currentPlayer);
             }
-            localStorage.setItem("gameState", JSON.stringify(gameState));
+            localStorage.setItem("gameState", JSON.stringify(newGame.gameState));
             console.log(localStorage.getItem("gameState"));
         }
     }
@@ -261,7 +271,7 @@ $(document).ready(function(){
     //click handler for reset button
     $("#game-reset").on("click",function(){
 
-        resetGame();
-        canClick = true;
+        newGame.resetGame();
+        newGame.canClick = true;
     });
 });
