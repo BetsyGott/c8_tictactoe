@@ -38,7 +38,10 @@ body {
     font-size: 120%;
 }
 
-.form-input {font-size: 110%;width: 13vw;}
+.form-input {
+    font-size: 110%;
+    width: 13vw;
+}
 
 .form-area {
     /* padding-bottom: 0%; */
@@ -57,6 +60,9 @@ body {
     display: flex;
     align-content: space-between;
     align-items: center;
+    background-color: rgba(255, 255, 255, .5);
+    border: 2px dashed black;
+    border-radius: 10px;
 }
 
 .body-header {
@@ -74,7 +80,7 @@ body {
 }
 
 .game-logo img{
-    width: 100%;
+    width: 80%;
 }
 
 h1 {
@@ -96,17 +102,14 @@ h1 {
 .button-reset {
     font-family: inherit;
     font-size: inherit;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(192, 111, 114, 0.5);
     border: 2px solid black;
     padding: 10px 20px;
+    border-radius: 10px;
 }
 
 .button-reset:hover {
-    font-family: inherit;
-    font-size: inherit;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 2px solid black;
-    padding: 10px 20px;
+    background-color: rgba(192, 111, 114, 0.8);
 }
 
 #game-board {
@@ -169,5 +172,51 @@ h1 {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+@media screen and (max-width: 400px){
+
+    #player-board {
+        width: 100%;
+        height: 25%;
+        flex-direction: column;
+        display: flex;
+        align-content: space-between;
+        align-items: center;
+        background-color: rgba(255, 255, 255, .5);
+        border: 2px dashed black;
+        border-radius: 10px;
+    }
+
+    .body-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+    }
+
+    .body-header > h1 {
+        font-size: 200%;
+    }
+
+    .player-container {
+        width: 100%;
+    }
+
+    #game-board {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 200%;
+        margin-top: 2%;
+        background-image: url('assets/images/game-grid.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 130vw;
+        height: 85vh;
+        animation: bounceIn 2s;
     }
 }
