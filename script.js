@@ -237,4 +237,4 @@ $(document).ready(function(){
         resetGame();
         canClick = true;
     });
-});
+}); 
