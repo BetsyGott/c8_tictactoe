@@ -1,6 +1,7 @@
-var canClick = true,
-    playCount = 0,
-    winArray = [
+var TicTacToe = function(){
+    this.canClick = true;
+    this.playCount = 0;
+    this.winArray = [
         [0,1,2],
         [3, 4, 5],
         [6, 7, 8],
@@ -9,30 +10,56 @@ var canClick = true,
         [2,5,8],
         [0,4,8],
         [2,4,6]
-    ],
+    ];
 
-   mushroomPiece = {
-    name: "mushroom",
-    image: "assets/images/piece_mushroom.png"
-},
-   pepperPiece = {
-    name: "greenpepper",
-    image: "assets/images/piece_green_pepper.png"
-},
-    pepperoniPiece = {
-        name: "pepperoni",
-        image: "assets/images/piece_pepperoni.png"
-    },
-    player1 = {
-        name: "Player 1",
-        piece: mushroomPiece
-    },
-    player2 = {
-        name: "Player 2",
-        piece: pepperoniPiece
+    this.gameState = localStorage.getItem("gameState");
+
+};
+
+var GamePiece = function(){
+    this.name = "";
+    this.image = "";
     };
 
-    var gameState = localStorage.getItem("gameState");
+var Player = function(){
+    this.name = "";
+    this.piece = {};
+};
+// var canClick = true,
+//     playCount = 0,
+//     winArray = [
+//         [0,1,2],
+//         [3, 4, 5],
+//         [6, 7, 8],
+//         [0,3,6],
+//         [1,4,7],
+//         [2,5,8],
+//         [0,4,8],
+//         [2,4,6]
+//     ],
+
+//these will all become new gamePiece instantiations
+var mushroomPiece = new GamePiece();
+    mushroomPiece.name = "mushroom";
+    mushroomPiece.image = "assets/images/piece_mushroom.png";
+
+var pepperPiece = new GamePiece();
+    pepperPiece.name = "greenpepper";
+    pepperPiece.image = "assets/images/piece_green_pepper.png";
+
+var pepperoniPiece = new GamePiece();
+    pepperoniPiece.name = "pepperoni";
+    pepperoniPiece.image = "assets/images/piece_pepperoni.png";
+
+ var player1 = new Player();
+    player1.name = "Player 1";
+    player1.piece = mushroomPiece;
+
+var player2 = new Player();
+    player2.name = "Player 2";
+    player2.piece = pepperoniPiece;
+
+    //var gameState = localStorage.getItem("gameState");
 
     if(!gameState){
         gameState = {
@@ -237,4 +264,4 @@ $(document).ready(function(){
         resetGame();
         canClick = true;
     });
-}); 
+});
